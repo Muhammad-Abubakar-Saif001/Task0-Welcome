@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Custom Console</title>
+  <style>
+    #console {
+      width: 100%;
+      height: 200px;
+      background: #111;
+      color: #0f0;
+      font-family: monospace;
+      padding: 10px;
+      overflow-y: auto;
+    }
+    input {
+      width: 100%;
+      padding: 8px;
+      font-family: monospace;
+      border: none;
+      outline: none;
+    }
+  </style>
+</head>
+<body>
+  <div id="console"></div>
+  <input id="command" placeholder="Type JavaScript and press Enter...">
+
+  <script>
+    const consoleDiv = document.getElementById("console");
+    const input = document.getElementById("command");
+
+    function log(msg) {
+      consoleDiv.innerHTML += msg + "<br>";
+      consoleDiv.scrollTop = consoleDiv.scrollHeight; // auto-scroll
+    }
+
+    input.addEventListener("keydown", function(event) {
+      if (event.key === "Enter") {
+        const code = input.value;
+        log("> " + code);
+        try {
+          let result = eval(code);  // runs the typed JavaScript
+          log(result);
+        } catch (err) {
+          log("Error: " + err.message);
+        }
+        input.value = "";
+      }
+    });
+
+    log("Custom Console Ready!");
+  </script>
+</body>
+</html>
